@@ -1,0 +1,59 @@
+h1{
+    text-align: center;
+    color: rgba(189, 58, 58, 0.863);
+}
+
+table{
+    border: 1px solid rgba(189, 58, 58, 0.863);
+    margin: auto;
+    box-sizing: border-box;
+}
+tr{
+    border: 1px solid rgba(189, 58, 58, 0.863);
+}
+td{
+    border: 1px solid rgba(189, 58, 58, 0.863);
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+.first{
+    background: cadetblue;
+}
+.second{
+    background:pink;
+}
+
+.unavailable{
+    background-color: black;
+    cursor: not-allowed;
+}
+
+.sabuk{
+    background-color: royalblue;
+    cursor: pointer;
+}
+
+.gear{
+    background-color: seagreen;
+    cursor: pointer;
+}
+
+.samurai{
+    background-color: silver;
+    cursor: pointer;
+}
+
+.celurit{
+    background-color: brown;
+    cursor: pointer;
+}
+
+.highlighted{
+    cursor: move;
+    -webkit-box-shadow: inset 0px 0px 14px 1px rgba(0,0,0,0.81);
+    -moz-box-shadow: inset 0px 0px 14px 1px rgba(0,0,0,0.81);
+    box-shadow: inset 0px 0px 14px 1px rgba(0,0,0,0.81);
+}
