@@ -1,59 +1,158 @@
-h1{
-    text-align: center;
-    color: rgba(189, 58, 58, 0.863);
+
+div{
+    display: flex;
+    flex-direction: row;
 }
 
+div .wpn{
+    display: block;
+}
+
+.wpn img{
+    margin: auto;
+    width: 80px;
+}
+
+div .child{
+    margin: auto;
+}
+h1,h4{
+    text-align: center;
+    color: rgba(189, 58, 58, 0.863);
+    margin: 0;
+}
+
+.player-board h1, .player-board h4{
+    font-size: large;
+}
 table{
     border: 1px solid rgba(189, 58, 58, 0.863);
     margin: auto;
     box-sizing: border-box;
+    background-image: url("assets/tile.png");
+    width: 550px;
+    height: 550px;
+
 }
 tr{
-    border: 1px solid rgba(189, 58, 58, 0.863);
+    border: 1px solid ;
 }
 td{
-    border: 1px solid rgba(189, 58, 58, 0.863);
-    width: 20px;
-    height: 20px;
+    border: 1px solid;
+    width: 30px;
+    height: 30px;
     padding: 10px;
     text-align: center;
+    background-image: url("assets/tile.png");
 }
 
 .first{
-    background: cadetblue;
+    background-image: url("assets/boyOnePixel.png");
 }
+
 .second{
-    background:pink;
+    background-image: url("assets/boyTwoPixel.png");
 }
 
 .unavailable{
-    background-color: black;
+    background-image: url("assets/batu.png");
     cursor: not-allowed;
 }
 
 .sabuk{
-    background-color: royalblue;
+    background-image: url("assets/sabuk.png");
     cursor: pointer;
 }
 
 .gear{
-    background-color: seagreen;
+    background-image: url("assets/gear.png");
     cursor: pointer;
 }
 
 .samurai{
-    background-color: silver;
+    background-image: url("assets/samurai.png");
     cursor: pointer;
 }
 
 .celurit{
-    background-color: brown;
+    background-image: url("assets/celurit.png");
     cursor: pointer;
 }
 
-.highlighted{
-    cursor: move;
-    -webkit-box-shadow: inset 0px 0px 14px 1px rgba(0,0,0,0.81);
-    -moz-box-shadow: inset 0px 0px 14px 1px rgba(0,0,0,0.81);
-    box-shadow: inset 0px 0px 14px 1px rgba(0,0,0,0.81);
+.player-board{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+}
+
+.attack button{
+    background-color: red;
+    color: wheat;
+    margin: 5px;
+    font-size: 20px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: white;
+    color: black;
+    transition-duration: 0.4s;
+}
+
+.available{
+    background-image: url("assets/jalan.png");
+    size: 1px;
+    cursor: pointer;
+}
+
+img{
+    display: block;
+}
+
+.sprite, .weapon , .unavailable, .available{
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.turn-on{
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    margin: 10px auto;
+    background-color: #d5d5d5;
+}
+
+.start_content{
+    display: block;
+    font-size: larger;
+}
+
+.start_content h3, .start_content button{
+    text-align: center;
+    margin: auto;
+}
+
+.start_content button{
+    background-color: wheat;
+    color: black;
+    font-size: 20px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: black;
+    color: white;
+    transition-duration: 0.4s;
 }
