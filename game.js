@@ -35,8 +35,12 @@ class Player {
     result(){
         $(`#pOne_btns`).css('display','none')
         $(`#pTwo_btns`).css('display','none')
+        $(`.turn-on`).css('display','none')
         $('.wpn').css('display','none')
-        $(`#${this.name}`).append(`<h1 class='winner'>WINNER</h1>`)
+        $('.game-board').css('display','block')
+        $('.game-board').html(`<h1 class='winner'>
+        🎉 Congratulations 🎉 ! <br>
+        ${this.turn} player WIN  !</h1>`)
     }
 }
 // Weapons Object
@@ -315,6 +319,8 @@ function fight(){
         attack(secondPlayer, firstPlayer);
     }
 }
+
+
 
 $('#start_button').click(function(){
     $( "#start" ).css('display','none')
