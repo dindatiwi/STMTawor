@@ -49,7 +49,7 @@ class weapon {
     }
 }
 
-const weapons = [{name: "sabuk"},{name: "gear"},{name: "samurai"},{name: "celurit"}];
+const weapons = [{name: "hand"},{name: "sabuk"},{name: "gear"},{name: "samurai"},{name: "celurit"}];
 
 //Grid Function
 function createGrid(){
@@ -70,10 +70,10 @@ function createGrid(){
 
 //Creating obsacle function
 function createBlock(){
-    let j = 0
+    let j = 1
     while(j < 35){
         let randNum = randomNum()
-        if(!(notAllowedTiles[i]==randNum) && !(weaponTiles[i]== randNum) && !(randNum=='0-0') && !(randNum=='9-9')){
+        if(!((notAllowedTiles[i]==randNum) && (weaponTiles[i]== randNum) && (randNum=='1-1'))){
             notAllowedTiles[i] = randNum;
             $('#' + randNum).addClass('unavailable');
             j++
@@ -83,10 +83,10 @@ function createBlock(){
 
 // put random weapons
 function randWeapons(){
-    let i = 0;
-    while(i<4){
+    let i = 1;
+    while(i<5){
         let randNum = randomNum()
-        if( !(weaponTiles[i]== randNum) && !(notAllowedTiles[i]==randNum) && !(randNum=='0-0') && !(randNum=='9-9')){
+        if( !((weaponTiles[i]== randNum) && (notAllowedTiles[i]==randNum) && (randNum=='1-1'))){
             $('#' + randNum).addClass(`weapon ${weapons[i].name}`)
             $('#' + randNum).removeClass('unavailable')
             weaponTiles[i] = randNum;
@@ -106,9 +106,7 @@ function cellPosition(i){
 //Random number function
 function randomNum() {
     let randNum = Math.floor(Math.random() * 100);
-    console.log(randNum)
     cell = cellPosition(randNum);
-    console.log(cell)
     return cell;
     
 }
