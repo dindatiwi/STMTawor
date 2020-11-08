@@ -71,7 +71,7 @@ function createGrid(){
 //Creating obsacle function
 function createBlock(){
     let j = 1
-    while(j < 35){
+    while(j < 30){
         let randNum = randomNum()
         if(!((notAllowedTiles[i]==randNum) && (weaponTiles[i]== randNum) && (randNum=='1-1'))){
             notAllowedTiles[i] = randNum;
@@ -91,24 +91,33 @@ function randWeapons(){
             $('#' + randNum).removeClass('unavailable')
             weaponTiles[i] = randNum;
             i++
+            
         }
     }
 }
+console.log(weaponTiles)
+console.log(notAllowedTiles)
 //position cell and row
 function cellPosition(i){
     // to identify column number
     let gridCol = i % 10;
     //to identify row number
     let gridRow = Math.floor(i / 10);
+    if(gridCol > 0){
+        gridRow = gridRow + 1;
+    }
+    //to identify the position of the last cell (10th) on grid
+    else if(gridCol == 0){
+        gridCol = 10;
+    }
     return gridCol + "-" + gridRow;
 }
 
 //Random number function
 function randomNum() {
-    let randNum = Math.floor(Math.random() * 100);
+    let randNum = Math.floor(Math.random() * (90 - 1) + 1);
     cell = cellPosition(randNum);
     return cell;
-    
 }
 
 //func add weapon image and atk value in the player board
