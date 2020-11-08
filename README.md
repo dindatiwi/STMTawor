@@ -1,2 +1,2 @@
 # SMKTawor
-Simple Javascript BoardGame [WIP]
+Simple Javascript BoardGame
