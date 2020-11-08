@@ -4,14 +4,7 @@ div{
     flex-direction: row;
 }
 
-div .wpn{
-    display: block;
-}
 
-.wpn img{
-    margin: auto;
-    width: 80px;
-}
 
 div .child{
     margin: auto;
@@ -46,6 +39,34 @@ td{
     background-image: url("assets/tile.png");
 }
 
+
+
+.unavailable{
+    background-image: url("assets/batu.png");
+    cursor: not-allowed;
+}
+
+.available{
+    background-image: url("assets/jalan.png");
+    cursor: pointer;
+}
+
+.sabuk{
+    background-image: url("assets/sabuk.png");
+}
+
+.gear{
+    background-image: url("assets/gear.png");
+}
+
+.samurai{
+    background-image: url("assets/samurai.png");
+}
+
+.celurit{
+    background-image: url("assets/celurit.png");
+}
+
 .first{
     background-image: url("assets/boyOnePixel.png");
 }
@@ -54,29 +75,13 @@ td{
     background-image: url("assets/boyTwoPixel.png");
 }
 
-.unavailable{
-    background-image: url("assets/batu.png");
-    cursor: not-allowed;
+div .wpn{
+    display: block;
 }
 
-.sabuk{
-    background-image: url("assets/sabuk.png");
-    cursor: pointer;
-}
-
-.gear{
-    background-image: url("assets/gear.png");
-    cursor: pointer;
-}
-
-.samurai{
-    background-image: url("assets/samurai.png");
-    cursor: pointer;
-}
-
-.celurit{
-    background-image: url("assets/celurit.png");
-    cursor: pointer;
+.wpn img{
+    margin: auto;
+    width: 80px;
 }
 
 .player-board{
@@ -105,17 +110,11 @@ button:hover{
     transition-duration: 0.4s;
 }
 
-.available{
-    background-image: url("assets/jalan.png");
-    size: 1px;
-    cursor: pointer;
+.winner{
+    color: red;
 }
 
-img{
-    display: block;
-}
-
-.sprite, .weapon , .unavailable, .available{
+.sprite, .weapon,.available , .unavailable {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;

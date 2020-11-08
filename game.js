@@ -1,6 +1,5 @@
 //Global def
-let placed = false
-let cell, firstPlayer, secondPlayer, w1, w2, w3, w4;
+let cell, firstPlayer, secondPlayer, sabuk, gear, samurai, celurit,hand;
 let turn = 'first'
 let weaponTiles = []
 let notAllowedTiles = []
@@ -11,15 +10,14 @@ let fightStatus = 0;
 
 // Player Object
 class Player {
-  constructor(turn,name,sprite,position) {
+  constructor(turn,name,sprite,position,weapon,attackValue) {
     this.turn = turn
     this.name = name
     this.sprite = sprite
     this.position = position
     this.health = 100
-    this.weapon = {
-        name: 'hand', damage: 10
-    }
+    this.weapon = weapon
+    this.attackValue = attackValue
   }
   playerPosition(){
       let pCell = $(`#${this.position}`)
@@ -31,8 +29,8 @@ class Player {
     this.position = newPosition;
     }
     defaultWeapon(){
-        $(`#${this.name}_weapon`).attr('src', 'assets/' + this.weapon.name +'.png');
-        $(`#${this.name}atkVal`).html("Attack Value = 10");
+        $(`#${this.name}_weapon`).attr('src', `assets/${this.weapon}.png`);
+        $(`#${this.name}atkVal`).html(`Attack Value = ${this.attackValue}`);
     }
     result(){
         $(`#pOne_btns`).css('display','none')
@@ -43,9 +41,10 @@ class Player {
 }
 // Weapons Object
 class weapon {
-    constructor(name, position, damage){
+    constructor(name, position, weaponClass, damage){
         this.name = name;
         this.position = position;
+        this.weaponClass = weaponClass;
         this.damage= damage;
     }
 }
@@ -57,9 +56,9 @@ function createGrid(){
     let table = document.createElement('table')
     table.setAttribute('id','grid')
     $('.game-board').append(table);
-    for(i=0;i<10;i++){
+    for(i=1;i<11;i++){
         let tr = document.createElement('tr')
-        for(j=0;j<10;j++){
+        for(j=1;j<11;j++){
             const td = document.createElement('td')
             td.setAttribute('id',i+'-'+j)
             td.setAttribute('class',"grid-item")
@@ -72,12 +71,11 @@ function createGrid(){
 //Creating obsacle function
 function createBlock(){
     let j = 0
-    while(j < 30){
+    while(j < 35){
         let randNum = randomNum()
-        if(!(notAllowedTiles.includes(randNum) && placed)){
+        if(!(notAllowedTiles[i]==randNum) && !(weaponTiles[i]== randNum) && !(randNum=='0-0') && !(randNum=='9-9')){
             notAllowedTiles[i] = randNum;
             $('#' + randNum).addClass('unavailable');
-            placed = true;
             j++
         }
     }
@@ -88,7 +86,7 @@ function randWeapons(){
     let i = 0;
     while(i<4){
         let randNum = randomNum()
-        if( !weaponTiles.includes(randNum) && !notAllowedTiles.includes(randNum)){
+        if( !(weaponTiles[i]== randNum) && !(notAllowedTiles[i]==randNum) && !(randNum=='0-0') && !(randNum=='9-9')){
             $('#' + randNum).addClass(`weapon ${weapons[i].name}`)
             $('#' + randNum).removeClass('unavailable')
             weaponTiles[i] = randNum;
@@ -99,33 +97,36 @@ function randWeapons(){
 //position cell and row
 function cellPosition(i){
     // to identify column number
-    let gridCol = i % 9;
+    let gridCol = i % 10;
     //to identify row number
-    let gridRow = Math.floor(i / 9);
+    let gridRow = Math.floor(i / 10);
     return gridCol + "-" + gridRow;
 }
 
 //Random number function
 function randomNum() {
-    let randNum = Math.floor((Math.random() * 100) + 1);
+    let randNum = Math.floor(Math.random() * 100);
+    console.log(randNum)
     cell = cellPosition(randNum);
+    console.log(cell)
     return cell;
+    
 }
 
 //func add weapon image and atk value in the player board
 function takenWeapon(player, weapon_num){
-    player.weapon.name = weapon_num;
+    player.weapon = weapon_num;
     $(`.${weapon_num}`).removeClass(weapon_num);
-    player.weapon.damage = eval(weapon_num).damage;
-    $(`#${player.name}atkVal`).html("Attack Value = "+ player.weapon.damage);
+    player.attackValue = eval(weapon_num).damage;
+    $(`#${player.name}atkVal`).html("Attack Value = "+ player.attackValue);
     $(`#${player.name}_weapon`).attr('src', 'assets/' + weapon_num +'.png');
 }
 
 function dropWeapon(player, position, new_weapon){
-    $(`#${player.position}`).addClass(`weapon ${player.weapon.name}`);
+    $(`#${player.position}`).addClass(`weapon ${player.weapon}`);
     player.changePosition(position);
     let newWeapon = takenWeapon(player, new_weapon);
-    player.weapon.name = newWeapon;
+    player.weapon = new_weapon;
 }
 
 /*____________________________________________________________________________
@@ -152,9 +153,9 @@ function id_value(x, y){
 
 // function to extract x and y values of a position
 function xy_extract(position){
-    let dash = position.indexOf("-");
-    let x_value = parseInt(position.substring(5, dash), 10);
-    let y_value = parseInt(position.substring(dash + 1, position.length), 10);
+    let dash = position.split('-');
+    let x_value = parseInt(dash[0]);
+    let y_value = parseInt(dash[1]);
     return [x_value, y_value];
 }
 
@@ -169,6 +170,8 @@ function lowerLoop(){
     lower = [];
 }
 
+
+///check here
 function possibleMove(player){
     let x = xy_extract(player.position)[0];
     let y = xy_extract(player.position)[1];
@@ -234,6 +237,7 @@ function moveOrFight() {
 
 function listener(cells, player){
     cells.bind("click", function(){
+
         $('.grid-item').removeClass('available');
         updatedPosition = $(this).attr('id');
         player.changePosition(updatedPosition);
@@ -241,6 +245,7 @@ function listener(cells, player){
         if(weaponTiles.indexOf(updatedPosition) > -1){
             let weapon_class = ($(this).attr('class').split(' ').splice(2, 1)).toString();
             dropWeapon(player, player.position, weapon_class);
+            console.log(weapon_class)
         }
         // fight activation state
         let p1_xy = xy_extract(firstPlayer.position);
@@ -264,6 +269,7 @@ function movements(player){
     possibleMove(player);
     let possibleCell = $('.available');
     listener(possibleCell, player);
+    
 }
 
 // function to execute the attack and defend buttons
@@ -273,12 +279,10 @@ function attack(player1, player2){
     // show and hide attack buttons
     $('#' + player1.name + '_btns').css('display', 'block');
     $('#' + player2.name + '_btns').css('display', 'none');
-    // reset attack value
-    player2.weapon.damage = eval(player2.weapon).damage;
     // attack button
     $('#' + player1.name + '_attack').bind("click", function(){
         let curr_val = $('#' + player2.name + '_power').val();
-        let new_val = Number(curr_val) - player1.weapon.damage;
+        let new_val = Number(curr_val) - player1.attackValue;
         $('#' + player2.name + '_power').val(new_val);
         player1.health = new_val;
         $('#'+ player2.name + '_progress_value').html(new_val + '%');
@@ -311,20 +315,18 @@ $('#start_button').click(function(){
     createBlock()
     randWeapons()
 
-
-    console.log(weaponTiles)
-
-    firstPlayer = new Player("first","pOne", "first", "0-0");
-    secondPlayer = new Player("second","pTwo", "second", "9-9");
+    firstPlayer = new Player("first","pOne", "first", "1-1","hand",10);
+    secondPlayer = new Player("second","pTwo", "second", "10-10","hand",10);
     firstPlayer.playerPosition();
     secondPlayer.playerPosition();
     firstPlayer.defaultWeapon();
     secondPlayer.defaultWeapon();
 
-    w1 = new weapon("sabuk", weaponTiles[0], 15);
-    w2 = new weapon("gear", weaponTiles[1], 25);
-    w3 = new weapon("samurai", weaponTiles[2], 35);
-    w4 = new weapon("celurit", weaponTiles[3], 20);
+    sabuk = new weapon("sabuk", weaponTiles[0],"sabuk", 15);
+    gear = new weapon("gear", weaponTiles[1],"gear", 25);
+    samurai = new weapon("samurai", weaponTiles[2],"samurai", 35);
+    celurit = new weapon("celurit", weaponTiles[3],"celurit", 20);
+    hand = new weapon('hand', weapons[4],'hand', 10);
 
     moveOrFight();
 });
